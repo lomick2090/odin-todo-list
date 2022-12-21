@@ -1,0 +1,50 @@
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+.header {
+    background-color: lightgreen;
+    padding: 3px;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid black;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    width:100vw;
+    height: 100vh;
+}
+
+.sidebar {
+    background-color: rgb(156, 156, 156);
+    width: 16vw;
+    height: 100vh;
+}
+
+.content {
+    background-color: oldlace;
+}
+
+.listformdiv {
+    position: absolute;
+    top:10vh;
+    left:10vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border: 3px solid blue;
+    padding: 40px;
+}
+
+#blur   {
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+}
