@@ -47,7 +47,78 @@ function populateTaskPage(listIndex) {
     let taskHeader = document.createElement ('h1');
     taskHeader.textContent = `${taskControl.lists[listIndex].name}`;
 
+    let addTaskButton = document.createElement('button');
+    addTaskButton.textContent = 'Add Task +';
+    addTaskButton.addEventListener('click', () => {
+
+        //listItem, taskName, taskDesc, taskDue
+        let taskFormDiv = document.createElement('div')
+        taskFormDiv.className = 'taskformdiv';
+    
+        let taskForm = document.createElement('form');
+        taskForm.className = 'taskform';
+    
+        let taskHeader = document.createElement('h1');
+        taskHeader.textContent = 'Add Task to List:';
+
+        let taskNameInputLabel = document.createElement('label');
+        taskNameInputLabel.for = 'taskname'
+        taskNameInputLabel.textContent = 'Task Name: '
+    
+        let taskNameInput = document.createElement('input');
+        taskNameInput.type = 'text';
+        taskNameInput.id = 'taskname';
+        taskNameInput.name = 'taskname';
+        taskNameInputLabel.appendChild(taskNameInput)
+
+        let taskDescInputLabel = document.createElement('label');
+        taskDescInputLabel.for = 'taskdesc'
+        taskDescInputLabel.textContent = 'Task Description: '
+    
+        let taskDescInput = document.createElement('input');
+        taskDescInput.type = 'text';
+        taskDescInput.id = 'taskdesc';
+        taskDescInput.name = 'taskdesc';
+        taskDescInputLabel.appendChild(taskDescInput)
+
+        let taskDueInputLabel = document.createElement('label');
+        taskDueInputLabel.for = 'taskdue'
+        taskDueInputLabel.textContent = 'Task Description: '
+    
+        let taskDueInput = document.createElement('input');
+        taskDueInput.type = 'date';
+        taskDueInput.id = 'taskdue';
+        taskDueInput.name = 'taskdue';
+        taskDueInputLabel.appendChild(taskDueInput)
+
+        let submitButton = document.createElement('button');
+        submitButton.textContent = 'Add';
+        submitButton.addEventListener('click', () => {
+            event.preventDefault();
+            taskControl.addTask(listIndex, taskNameInput.value, taskDescInput.value, taskDueInput.value);
+            taskForm.reset();
+            document.querySelector('.page').id = '';
+            taskFormDiv.remove();
+        });
+
+
+
+        taskFormDiv.appendChild(taskHeader);
+        taskForm.appendChild(taskNameInputLabel);
+        taskForm.appendChild(taskDescInputLabel);
+        taskForm.appendChild(taskDueInputLabel);
+        taskForm.appendChild(submitButton);
+        taskFormDiv.appendChild(taskForm);
+
+        document.querySelector('body').appendChild(taskFormDiv);
+
+        document.querySelector('.page').id = 'blur';
+    
+
+    })
+
     taskDiv.appendChild(taskHeader);
+    taskDiv.appendChild(addTaskButton);
     document.querySelector('.list').appendChild(taskDiv);
 }
 

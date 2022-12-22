@@ -29,7 +29,7 @@ body {
     background-color: oldlace;
 }
 
-.listformdiv {
+.listformdiv, .taskformdiv {
     position: absolute;
     top:10vh;
     left:10vw;
