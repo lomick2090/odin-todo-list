@@ -27,6 +27,30 @@ let taskControl = (() => {
 
 })();
 
+
+function populateLists() {
+    let newTask = document.createElement('div');
+    newTask.id = `${taskControl.lists.length -1}`
+    newTask.textContent = taskControl.lists[(taskControl.lists.length - 1)].name;
+    document.querySelector('.tasklists').appendChild(newTask);
+    newTask.addEventListener('click', () => {console.log(newTask.id); populateTaskPage(newTask.id)});
+}
+
+function populateTaskPage(listIndex) {
+    while (document.querySelector('.list').firstChild) {
+        document.querySelector('.list').firstChild.remove();
+    }
+
+    let taskDiv = document.createElement('div');
+    taskDiv.className = 'taskDiv';
+
+    let taskHeader = document.createElement ('h1');
+    taskHeader.textContent = `${taskControl.lists[listIndex].name}`;
+
+    taskDiv.appendChild(taskHeader);
+    document.querySelector('.list').appendChild(taskDiv);
+}
+
 document.querySelector('.addlistbutton').addEventListener('click', () => {
     let listFormDiv = document.createElement('div')
     listFormDiv.className = 'listformdiv';
@@ -51,11 +75,13 @@ document.querySelector('.addlistbutton').addEventListener('click', () => {
     submitButton.addEventListener('click', () => {
         event.preventDefault();
         document.querySelector('.page').id = '';
-        taskControl.createList(listInput.value);
+        if (listInput.value != '') {
+            taskControl.createList(listInput.value);
+            populateLists();
+        }
         listForm.reset();
-        populateLists();
         listFormDiv.remove();
-    })
+    });
 
     listInputLabel.appendChild(listInput);
     listForm.appendChild(listHeader);
@@ -68,12 +94,6 @@ document.querySelector('.addlistbutton').addEventListener('click', () => {
     document.querySelector('.page').id = 'blur';
 })
 
-function populateLists() {
-        let newTask = document.createElement('div');
-        newTask.textContent = taskControl.lists[(taskControl.lists.length - 1)].name;
-        document.querySelector('.tasklists').appendChild(newTask);
-
-}
 
 // console.log(taskControl.lists);
 // taskControl.createList('hello')
