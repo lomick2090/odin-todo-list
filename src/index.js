@@ -29,11 +29,36 @@ let taskControl = (() => {
 
 
 function populateLists() {
-    let newTask = document.createElement('div');
-    newTask.id = `${taskControl.lists.length -1}`
-    newTask.textContent = taskControl.lists[(taskControl.lists.length - 1)].name;
-    document.querySelector('.tasklists').appendChild(newTask);
-    newTask.addEventListener('click', () => {console.log(newTask.id); populateTaskPage(newTask.id)});
+    let newList = document.createElement('div');
+    newList.id = `${taskControl.lists.length -1}`
+    newList.textContent = taskControl.lists[(taskControl.lists.length - 1)].name;
+    document.querySelector('.tasklists').appendChild(newList);
+    newList.addEventListener('click', () =>  populateTaskPage(newList.id));
+}
+
+function populateTasks(listIndex) {
+    if (document.querySelector('.tasks')) {
+        document.querySelector('.tasks').remove()
+    }
+    let newTaskDiv = document.createElement('div');
+    newTaskDiv.className = 'tasks'
+
+    for (let i = 0; i < (taskControl.lists[listIndex].tasks.length); i++) {
+        let newTaskHeader = document.createElement('h3');
+        newTaskHeader.textContent = taskControl.lists[listIndex].tasks[i].name
+        newTaskDiv.appendChild(newTaskHeader);
+
+        let newTaskDesc = document.createElement('p');
+        newTaskDesc.textContent = taskControl.lists[listIndex].tasks[i].desc
+        newTaskDiv.appendChild(newTaskDesc);
+
+        let newTaskDue = document.createElement('p');
+        newTaskDue.textContent = `Due by: ${taskControl.lists[listIndex].tasks[i].due}`;
+        newTaskDiv.appendChild(newTaskDue);
+
+    }
+
+    document.querySelector('.list').appendChild(newTaskDiv);
 }
 
 function populateTaskPage(listIndex) {
@@ -96,6 +121,7 @@ function populateTaskPage(listIndex) {
         submitButton.addEventListener('click', () => {
             event.preventDefault();
             taskControl.addTask(listIndex, taskNameInput.value, taskDescInput.value, taskDueInput.value);
+            populateTaskPage(listIndex);
             taskForm.reset();
             document.querySelector('.page').id = '';
             taskFormDiv.remove();
@@ -120,6 +146,7 @@ function populateTaskPage(listIndex) {
     taskDiv.appendChild(taskHeader);
     taskDiv.appendChild(addTaskButton);
     document.querySelector('.list').appendChild(taskDiv);
+    populateTasks(listIndex);
 }
 
 document.querySelector('.addlistbutton').addEventListener('click', () => {
