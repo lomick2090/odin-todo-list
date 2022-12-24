@@ -76,9 +76,21 @@ body {
 .listnames {
     font-size: 25px;
     font-weight: bold;
+    display:flex;
+    justify-content: space-between;
 }
 
 .listnames:hover {
     background-color: darkslategray;
 
+}
+
+.tasks {
+    border: 1px solid black;
+}
+
+.list {
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: 1fr;
 }

@@ -24,24 +24,45 @@ let taskControl = (() => {
 
 })();
 
+function deleteList() {
+    listIndex = this.parentNode.id;
+    taskControl.lists.splice(listIndex, 1);
+    populateLists();
+}
 
 function populateLists() {
-    let newList = document.createElement('li');
-    newList.className = 'listnames'
-    newList.id = `${taskControl.lists.length -1}`
-    newList.textContent = taskControl.lists[(taskControl.lists.length - 1)].name;
-    document.querySelector('.tasklists').appendChild(newList);
-    newList.addEventListener('click', () =>  populateTaskPage(newList.id));
+    while (document.querySelector('.tasklists').firstChild) {
+        document.querySelector('.tasklists').firstChild.remove()
+    }
+
+    for (let i = 0; i< taskControl.lists.length; i++) {
+        let newListDiv = document.createElement('div');
+        let newList = document.createElement('li');
+        newListDiv.className = 'listnames'
+        newListDiv.id = `${i}`
+        newList.textContent = taskControl.lists[i].name;
+
+        let newListButton = document.createElement('button');
+        newListButton.textContent = 'X';
+        newListButton.addEventListener('click', deleteList);
+
+        newListDiv.appendChild(newList);
+        newListDiv.appendChild(newListButton);
+        document.querySelector('.tasklists').appendChild(newListDiv);
+        newListDiv.addEventListener('click', () =>  populateTaskPage(newListDiv.id));
+    }
 }
 
 function populateTasks(listIndex) {
-    if (document.querySelector('.tasks')) {
+    while (document.querySelector('.tasks')) {
         document.querySelector('.tasks').remove()
     }
-    let newTaskDiv = document.createElement('div');
-    newTaskDiv.className = 'tasks'
+    
 
     for (let i = 0; i < (taskControl.lists[listIndex].tasks.length); i++) {
+        let newTaskDiv = document.createElement('div');
+        newTaskDiv.className = 'tasks'
+
         let newTaskHeader = document.createElement('h3');
         newTaskHeader.textContent = taskControl.lists[listIndex].tasks[i].name
         newTaskDiv.appendChild(newTaskHeader);
@@ -54,9 +75,11 @@ function populateTasks(listIndex) {
         newTaskDue.textContent = `Due by: ${taskControl.lists[listIndex].tasks[i].due}`;
         newTaskDiv.appendChild(newTaskDue);
 
+        document.querySelector('.list').appendChild(newTaskDiv);
+
     }
 
-    document.querySelector('.list').appendChild(newTaskDiv);
+    
 }
 
 function populateTaskPage(listIndex) {
@@ -64,8 +87,11 @@ function populateTaskPage(listIndex) {
         document.querySelector('.list').firstChild.remove();
     }
 
-    let taskDiv = document.createElement('div');
-    taskDiv.className = 'taskDiv';
+    let taskDiv = document.querySelector('.tasktitle');
+
+    while (taskDiv.firstChild) {
+        taskDiv.firstChild.remove();
+    }
 
     let taskHeader = document.createElement ('h1');
     taskHeader.textContent = `${taskControl.lists[listIndex].name}`;
@@ -143,7 +169,6 @@ function populateTaskPage(listIndex) {
 
     taskDiv.appendChild(taskHeader);
     taskDiv.appendChild(addTaskButton);
-    document.querySelector('.list').appendChild(taskDiv);
     populateTasks(listIndex);
 }
 
