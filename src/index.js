@@ -16,9 +16,6 @@ let taskControl = (() => {
         })
     }
 
-
-
-
     return {
         createList,
         lists,
@@ -29,7 +26,8 @@ let taskControl = (() => {
 
 
 function populateLists() {
-    let newList = document.createElement('div');
+    let newList = document.createElement('li');
+    newList.className = 'listnames'
     newList.id = `${taskControl.lists.length -1}`
     newList.textContent = taskControl.lists[(taskControl.lists.length - 1)].name;
     document.querySelector('.tasklists').appendChild(newList);
@@ -108,7 +106,7 @@ function populateTaskPage(listIndex) {
 
         let taskDueInputLabel = document.createElement('label');
         taskDueInputLabel.for = 'taskdue'
-        taskDueInputLabel.textContent = 'Task Description: '
+        taskDueInputLabel.textContent = 'Task Due Date: '
     
         let taskDueInput = document.createElement('input');
         taskDueInput.type = 'date';
