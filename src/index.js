@@ -24,6 +24,18 @@ let taskControl = (() => {
 
 })();
 
+function updateStorage() {
+    localStorage.setItem('lists', JSON.stringify(taskControl.lists));
+}
+
+function updateFromStorage() {
+
+    let storedLists = JSON.parse(localStorage.getItem('lists'));
+    for(i = 0; i < storedLists.length; i++) {
+        taskControl.lists.push(storedLists[i]);
+    }
+}
+
 function createListPrompt() {
     let listFormDiv = document.createElement('div')
     listFormDiv.className = 'listformdiv';
@@ -50,6 +62,7 @@ function createListPrompt() {
         document.querySelector('.page').id = '';
         if (listInput.value != '') {
             taskControl.createList(listInput.value);
+            updateStorage();
             populateLists();
         }
         listForm.reset();
@@ -72,7 +85,7 @@ function populateLists() {
     while (document.querySelector('.tasklists').firstChild) {
         document.querySelector('.tasklists').firstChild.remove()
     }
-
+    
     for (let i = 0; i< taskControl.lists.length; i++) {
         let newListDiv = document.createElement('div');
         let newList = document.createElement('li');
@@ -94,6 +107,7 @@ function populateLists() {
 function deleteList() {
     listIndex = this.parentNode.id;
     taskControl.lists.splice(listIndex, 1);
+    updateStorage();
     populateLists();
 }
 
@@ -167,6 +181,7 @@ function createTaskPrompt(listIndex) {
     submitButton.addEventListener('click', () => {
         event.preventDefault();
         taskControl.addTask(listIndex, taskNameInput.value, taskDescInput.value, taskDueInput.value);
+        updateStorage();
         populateTaskPage(listIndex);
         taskForm.reset();
         document.querySelector('.page').id = '';
@@ -237,6 +252,7 @@ function populateTasks(listIndex) {
 
 function deleteTask(listIndex, taskIndex) {
     taskControl.lists[listIndex].tasks.splice(taskIndex, 1);
+    updateStorage();
     populateTasks(listIndex);
 }
 
@@ -287,6 +303,7 @@ function createEditTaskPrompt(listIndex, taskIndex) {
         taskControl.lists[listIndex].tasks[taskIndex].name = taskNameInput.value;
         taskControl.lists[listIndex].tasks[taskIndex].desc = taskDescInput.value;
         taskControl.lists[listIndex].tasks[taskIndex].due = taskDueInput.value;
+        updateStorage();
         populateTaskPage(listIndex);
         taskForm.reset();
         document.querySelector('.page').id = '';
@@ -308,3 +325,8 @@ function createEditTaskPrompt(listIndex, taskIndex) {
 }
 
 document.querySelector('.addlistbutton').addEventListener('click', () => createListPrompt())
+
+if (localStorage.getItem('lists')) {
+    updateFromStorage();
+    populateLists();
+}
