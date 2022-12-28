@@ -29,7 +29,6 @@ function updateStorage() {
 }
 
 function updateFromStorage() {
-
     let storedLists = JSON.parse(localStorage.getItem('lists'));
     for(i = 0; i < storedLists.length; i++) {
         taskControl.lists.push(storedLists[i]);
@@ -83,14 +82,14 @@ function createListPrompt() {
 
 function populateLists() {
     while (document.querySelector('.tasklists').firstChild) {
-        document.querySelector('.tasklists').firstChild.remove()
+        document.querySelector('.tasklists').firstChild.remove();
     }
     
     for (let i = 0; i< taskControl.lists.length; i++) {
         let newListDiv = document.createElement('div');
         let newList = document.createElement('li');
         newListDiv.className = 'listnames'
-        newListDiv.id = i
+        newListDiv.id = i;
         newList.textContent = taskControl.lists[i].name;
 
         let newListButton = document.createElement('button');
@@ -137,7 +136,7 @@ function populateTaskPage(listIndex) {
 function createTaskPrompt(listIndex) {
 
     //listItem, taskName, taskDesc, taskDue
-    let taskFormDiv = document.createElement('div')
+    let taskFormDiv = document.createElement('div');
     taskFormDiv.className = 'taskformdiv';
 
     let taskForm = document.createElement('form');
@@ -147,8 +146,8 @@ function createTaskPrompt(listIndex) {
     taskHeader.textContent = 'Add Task to List:';
 
     let taskNameInputLabel = document.createElement('label');
-    taskNameInputLabel.for = 'taskname'
-    taskNameInputLabel.textContent = 'Task Name: '
+    taskNameInputLabel.for = 'taskname';
+    taskNameInputLabel.textContent = 'Task Name: ';
 
     let taskNameInput = document.createElement('input');
     taskNameInput.type = 'text';
@@ -157,8 +156,8 @@ function createTaskPrompt(listIndex) {
     taskNameInputLabel.appendChild(taskNameInput)
 
     let taskDescInputLabel = document.createElement('label');
-    taskDescInputLabel.for = 'taskdesc'
-    taskDescInputLabel.textContent = 'Task Description: '
+    taskDescInputLabel.for = 'taskdesc';
+    taskDescInputLabel.textContent = 'Task Description: ';
 
     let taskDescInput = document.createElement('input');
     taskDescInput.type = 'text';
@@ -167,8 +166,8 @@ function createTaskPrompt(listIndex) {
     taskDescInputLabel.appendChild(taskDescInput)
 
     let taskDueInputLabel = document.createElement('label');
-    taskDueInputLabel.for = 'taskdue'
-    taskDueInputLabel.textContent = 'Task Due Date: '
+    taskDueInputLabel.for = 'taskdue';
+    taskDueInputLabel.textContent = 'Task Due Date: ';
 
     let taskDueInput = document.createElement('input');
     taskDueInput.type = 'date';
@@ -206,21 +205,21 @@ function createTaskPrompt(listIndex) {
 
 function populateTasks(listIndex) {
     while (document.querySelector('.tasks')) {
-        document.querySelector('.tasks').remove()
+        document.querySelector('.tasks').remove();
     }
     
 
     for (let i = 0; i < (taskControl.lists[listIndex].tasks.length); i++) {
         let newTaskDiv = document.createElement('div');
         newTaskDiv.id = i;
-        newTaskDiv.className = 'tasks'
+        newTaskDiv.className = 'tasks';
 
         let newTaskHeader = document.createElement('h3');
-        newTaskHeader.textContent = taskControl.lists[listIndex].tasks[i].name
+        newTaskHeader.textContent = taskControl.lists[listIndex].tasks[i].name;
         newTaskDiv.appendChild(newTaskHeader);
 
         let newTaskDesc = document.createElement('p');
-        newTaskDesc.textContent = taskControl.lists[listIndex].tasks[i].desc
+        newTaskDesc.textContent = taskControl.lists[listIndex].tasks[i].desc;
         newTaskDiv.appendChild(newTaskDesc);
 
         let newTaskDue = document.createElement('p');
@@ -257,7 +256,7 @@ function deleteTask(listIndex, taskIndex) {
 }
 
 function createEditTaskPrompt(listIndex, taskIndex) {
-    let taskFormDiv = document.createElement('div')
+    let taskFormDiv = document.createElement('div');
     taskFormDiv.className = 'taskformdiv';
 
     let taskForm = document.createElement('form');
@@ -267,8 +266,8 @@ function createEditTaskPrompt(listIndex, taskIndex) {
     taskHeader.textContent = 'Edit Task:';
 
     let taskNameInputLabel = document.createElement('label');
-    taskNameInputLabel.for = 'taskname'
-    taskNameInputLabel.textContent = 'Task Name: '
+    taskNameInputLabel.for = 'taskname';
+    taskNameInputLabel.textContent = 'Task Name: ';
 
     let taskNameInput = document.createElement('input');
     taskNameInput.type = 'text';
@@ -277,24 +276,24 @@ function createEditTaskPrompt(listIndex, taskIndex) {
     taskNameInputLabel.appendChild(taskNameInput)
 
     let taskDescInputLabel = document.createElement('label');
-    taskDescInputLabel.for = 'taskdesc'
-    taskDescInputLabel.textContent = 'Task Description: '
+    taskDescInputLabel.for = 'taskdesc';
+    taskDescInputLabel.textContent = 'Task Description: ';
 
     let taskDescInput = document.createElement('input');
     taskDescInput.type = 'text';
     taskDescInput.id = 'taskdesc';
     taskDescInput.name = 'taskdesc';
-    taskDescInputLabel.appendChild(taskDescInput)
+    taskDescInputLabel.appendChild(taskDescInput);
 
     let taskDueInputLabel = document.createElement('label');
-    taskDueInputLabel.for = 'taskdue'
-    taskDueInputLabel.textContent = 'Task Due Date: '
+    taskDueInputLabel.for = 'taskdue';
+    taskDueInputLabel.textContent = 'Task Due Date: ';
 
     let taskDueInput = document.createElement('input');
     taskDueInput.type = 'date';
     taskDueInput.id = 'taskdue';
     taskDueInput.name = 'taskdue';
-    taskDueInputLabel.appendChild(taskDueInput)
+    taskDueInputLabel.appendChild(taskDueInput);
 
     let submitButton = document.createElement('button');
     submitButton.textContent = 'Add';
@@ -324,9 +323,10 @@ function createEditTaskPrompt(listIndex, taskIndex) {
     document.querySelector('.page').id = 'blur';
 }
 
-document.querySelector('.addlistbutton').addEventListener('click', () => createListPrompt())
+document.querySelector('.addlistbutton').addEventListener('click', () => createListPrompt());
 
 if (localStorage.getItem('lists')) {
     updateFromStorage();
     populateLists();
+    populateTaskPage(0);
 }
