@@ -273,7 +273,8 @@ function createEditTaskPrompt(listIndex, taskIndex) {
     taskNameInput.type = 'text';
     taskNameInput.id = 'taskname';
     taskNameInput.name = 'taskname';
-    taskNameInputLabel.appendChild(taskNameInput)
+    taskNameInput.defaultValue = taskControl.lists[listIndex].tasks[taskIndex].name
+    taskNameInputLabel.appendChild(taskNameInput);
 
     let taskDescInputLabel = document.createElement('label');
     taskDescInputLabel.for = 'taskdesc';
@@ -283,6 +284,7 @@ function createEditTaskPrompt(listIndex, taskIndex) {
     taskDescInput.type = 'text';
     taskDescInput.id = 'taskdesc';
     taskDescInput.name = 'taskdesc';
+    taskDescInput.defaultValue = taskControl.lists[listIndex].tasks[taskIndex].desc
     taskDescInputLabel.appendChild(taskDescInput);
 
     let taskDueInputLabel = document.createElement('label');
@@ -293,10 +295,11 @@ function createEditTaskPrompt(listIndex, taskIndex) {
     taskDueInput.type = 'date';
     taskDueInput.id = 'taskdue';
     taskDueInput.name = 'taskdue';
+    taskDueInput.defaultValue = taskControl.lists[listIndex].tasks[taskIndex].due
     taskDueInputLabel.appendChild(taskDueInput);
 
     let submitButton = document.createElement('button');
-    submitButton.textContent = 'Add';
+    submitButton.textContent = 'Update task';
     submitButton.addEventListener('click', () => {
         event.preventDefault();
         taskControl.lists[listIndex].tasks[taskIndex].name = taskNameInput.value;
